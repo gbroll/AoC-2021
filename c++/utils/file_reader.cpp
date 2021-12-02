@@ -6,9 +6,8 @@
 
 using namespace std;
 
-
 template vector<int> read_file<int>(string);
-//template vector<string> read_file<string>(string input,string filename);
+template vector<string> read_file(string);
 
 template <typename T>
 vector<T> read_file(string filename)
@@ -37,4 +36,36 @@ vector<T> read_file(string filename)
     file_in.close();
     return output;
     
+}
+
+template<>
+vector<string> read_file(string filename)
+{
+    vector<string> output;
+    string str_in;
+    fstream file_in;
+
+
+    file_in.open(filename, ios::in);
+    
+    if (!file_in.is_open())
+    {
+        cout << "Could not find file " << filename << endl;
+        return {};
+    }
+
+    while(!file_in.eof())
+    {
+        getline(file_in,str_in);
+        if (!str_in.empty())
+        {
+            output.push_back(str_in);
+        }
+        //cout << str_in << endl;
+    }
+
+    file_in.close();
+    return output;
+
+
 }

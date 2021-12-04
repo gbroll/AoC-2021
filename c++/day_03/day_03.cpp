@@ -10,7 +10,6 @@ bitset<12> bit_mode(vector<string> data, bool default_bit = true)
 
     bitset<12> output;
     string bin_str;
-
     int str_len;
     vector<int> sum_bits;
     int n_rows = data.size();
@@ -109,14 +108,12 @@ int solve_part2(vector<string> data)
 
 int main()
 {
-
     vector<string> data = read_file<string>("../../input/day_03.txt");
 
     int part_1 = solve_part1(data);
     int part_2 = solve_part2(data);
 
-    cout << "Day 1 Part 1 solution: " << part_1 << endl;
-    cout << "Day 1 Part 2 solution: " << part_2 << endl;
+    cout << "Day 3 Part 1 solution: " << part_1 << endl;
+    cout << "Day 3 Part 2 solution: " << part_2 << endl;
     
-
 }

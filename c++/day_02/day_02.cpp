@@ -52,13 +52,13 @@ int solve(vector<string> data, bool can_aim)
 int main()
 {
     string filename = "../../input/day_02.txt";
-    vector<string> data = read_file<string>(filename);
+    vector<string> data = read_file<string>(filename,true);
 
     int part_1 = solve(data, false);
     int part_2 = solve(data, true);
 
-    cout << "Day 1 Part 1 solution: " << part_1 << endl;
-    cout << "Day 1 Part 2 solution: " << part_2 << endl;
+    cout << "Day 2 Part 1 solution: " << part_1 << endl;
+    cout << "Day 2 Part 2 solution: " << part_2 << endl;
 
     return 0;
 

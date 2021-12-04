@@ -6,11 +6,11 @@
 
 using namespace std;
 
-template vector<int> read_file<int>(string);
-template vector<string> read_file(string);
+template vector<int> read_file<int>(string, bool = true);
+template vector<string> read_file(string, bool = true);
 
 template <typename T>
-vector<T> read_file(string filename)
+vector<T> read_file(string filename, bool)
 {
     vector<T> output;
     T value{};
@@ -39,7 +39,7 @@ vector<T> read_file(string filename)
 }
 
 template<>
-vector<string> read_file(string filename)
+vector<string> read_file(string filename, bool skip_empty_lines)
 {
     vector<string> output;
     string str_in;
@@ -60,6 +60,13 @@ vector<string> read_file(string filename)
         if (!str_in.empty())
         {
             output.push_back(str_in);
+        }
+        else
+        {
+            if (!skip_empty_lines)
+            {
+                output.push_back(str_in);
+            }
         }
         //cout << str_in << endl;
     }

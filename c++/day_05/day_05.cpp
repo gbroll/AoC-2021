@@ -1,5 +1,6 @@
 #include <iostream>
 #include <regex>
+#include <chrono>
 
 #include "../utils/file_reader.cpp"
 
@@ -10,7 +11,6 @@ struct line
     int x2;
     int y2;
 };
-
 
 vector<line> parse(vector<string> data, vector<vector<int>> &grid)
 {
@@ -117,6 +117,8 @@ int draw_lines(vector<line> lines,vector<vector<int>> grid, bool skip_diagonals 
 int main()
 {
 
+    auto start = chrono::high_resolution_clock::now();
+
     string filename = "../../input/day_05.txt";
     vector<string> data = read_file<string>(filename,true);
     vector<vector<int>> grid;
@@ -128,6 +130,9 @@ int main()
     cout << "Day 5 Part 1 solution: " << part_1 << endl;
     cout << "Day 5 Part 2 solution: " << part_2 << endl;
 
+    auto stop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+    cout << "Time taken: " << duration.count() << " µs" << endl;
     return 0;
 
 }

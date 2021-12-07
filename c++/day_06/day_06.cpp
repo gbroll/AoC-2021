@@ -62,7 +62,7 @@ ull solve(vector<int> data, int n_days)
     }    
     ull n_fish = accumulate(old_fish.begin(), old_fish.end(), 0ULL) + 
         accumulate(new_fish.begin(), new_fish.end(), 0ULL);
-        
+
     return n_fish;
 }
 
@@ -77,11 +77,11 @@ int main()
     ull part_1 = solve(data, 80);
     ull part_2 = solve(data, 256);
 
-    cout << "Day 6 Part 1 solution: " << part_1 << endl;
-    cout << "Day 6 Part 2 solution: " << part_2 << endl;
-
     auto stop = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+    cout << "Day 6 Part 1 solution: " << part_1 << endl;
+    cout << "Day 6 Part 2 solution: " << part_2 << endl;
     cout << "Time taken: " << duration.count() << " µs" << endl;
 
     return 0;

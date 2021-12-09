@@ -9,16 +9,6 @@
 typedef pair<int,int> coord;
 typedef vector<vector<int>> grid;
 
-vector<coord> get_neighbours()
-{
-    vector<coord> neighbours;
-    neighbours.push_back(make_pair(1,0));
-    neighbours.push_back(make_pair(-1,0));
-    neighbours.push_back(make_pair(0,1));
-    neighbours.push_back(make_pair(0,-1));
-
-    return neighbours;
-}
 
 grid parse(vector<string> str_data)
 {
@@ -36,6 +26,18 @@ grid parse(vector<string> str_data)
 
     return data;
 }
+
+vector<coord> get_neighbours()
+{
+    vector<coord> neighbours;
+    neighbours.push_back(make_pair(1,0));
+    neighbours.push_back(make_pair(-1,0));
+    neighbours.push_back(make_pair(0,1));
+    neighbours.push_back(make_pair(0,-1));
+
+    return neighbours;
+}
+
 
 vector<coord> find_low_points(grid data, vector<coord> &neighbours)
 {
@@ -74,6 +76,7 @@ vector<coord> find_low_points(grid data, vector<coord> &neighbours)
 
 int solve_part1(grid data)
 {
+    
     int count = 0;
     vector<coord> neighbours;
     vector<coord> low_points = find_low_points(data, neighbours);
@@ -102,7 +105,6 @@ int solve_part2(grid data)
     set<coord>::iterator it;
     std::pair<set<coord>::iterator,bool> ret;
 
-
     for (auto const &low_point : low_points)
     {
         set<coord> basin;
@@ -112,7 +114,6 @@ int solve_part2(grid data)
 
         do
         {
-
             coords = new_coords;
             new_coords.clear();
 
@@ -140,7 +141,6 @@ int solve_part2(grid data)
                     }
                 }
             }
-
         } while (new_coords.size() > 0);
 
         copy(b_sizes.begin(), b_sizes.end(),b_copy.begin());

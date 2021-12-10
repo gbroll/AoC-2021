@@ -38,7 +38,6 @@ vector<coord> get_neighbours()
     return neighbours;
 }
 
-
 vector<coord> find_low_points(grid data, vector<coord> &neighbours)
 {
     vector<coord> low_points;

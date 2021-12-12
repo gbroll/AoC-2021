@@ -12,7 +12,6 @@
 struct cave
 {
     bool big;
-    bool visited = false;
     int n_visits = 0;
     list<string> nb;
 };
@@ -59,62 +58,45 @@ cave_map parse(vector<string> str_data)
 
 }
 
-int recursive_dfs(string start, cave_map &caves, bool twice, stack<string> &stk)
+int recursive_dfs(string start, cave_map &caves, bool allow_twice)
 {
     int n_paths = 0;
     int n_caves = caves.size();
     list<string>::iterator list_it;
     cave_map::iterator cave_it;
 
-    //cout << start << ", " << (int)twice << endl;
-    stk.push(start);
-
     cave &ccave = caves.at(start);
-    ccave.n_visits++;
-    if (!ccave.big)
-    {
-        if (ccave.visited && start != "start")
-        {
-            twice = true;
-        }
-        ccave.visited = true;
-    }
-
+    if (!ccave.big) ccave.n_visits++;
+   
+    if (ccave.n_visits==2) allow_twice = false;
 
     for (list_it = ccave.nb.begin(); list_it!= ccave.nb.end(); ++list_it)
     {
-        
         if ((*list_it) == "start") ; //do nothing
         else if ((*list_it) == "end")
         {
-            //cout << "end" << endl;
             n_paths++;
+            continue;
+        }
 
+        else if (allow_twice || caves.at(*list_it).n_visits <= 0)
+        {
+            n_paths += recursive_dfs(*list_it, caves, allow_twice);
         }
-        else if (!caves.at(*list_it).visited || !twice)
-        {           
-            n_paths += recursive_dfs(*list_it, caves, twice, stk);
-            //cout << n_paths << endl;
-        }
-        
+  
     }
 
-    //cout << "What now?" << endl;
     ccave.n_visits--;
-    if (ccave.n_visits == 0) ccave.visited = false;
-    stk.pop();
+    if (ccave.n_visits == 1) allow_twice = true;
+
     return n_paths;
 }
 
 int solve(cave_map caves, bool part_2)
 {
     //using DFS
-    caves.at("start").visited = true;
-    caves.at("end").visited = true;
-    stack<string> stk;
 
-    int n_paths = recursive_dfs("start", caves, !part_2, stk);
-
+    int n_paths = recursive_dfs("start", caves, part_2);
     return n_paths;
 }
 

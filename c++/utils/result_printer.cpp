@@ -4,9 +4,12 @@
 
 #include "result_printer.hpp"
 
+typedef unsigned long long ull;
+
 using namespace std;
 
 template void print_results<int>(int day, int part1, int part2, vector<chrono::high_resolution_clock::time_point>);
+template void print_results<ull>(int day, ull part1, ull part2, vector<chrono::high_resolution_clock::time_point>);
 
 template <typename T>
 void print_results(int day, T part_1, T part_2, vector<chrono::high_resolution_clock::time_point> time_stamps)

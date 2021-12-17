@@ -82,46 +82,44 @@ risk_map_struct expand_grid(risk_map_struct risk_map)
         test.push_back(str_row);
     }
 
-
-    expanded_map.risk_level = exp_risk_level;
-    
+    expanded_map.risk_level = exp_risk_level;    
     
     return expanded_map;
 }
 
-int solve(risk_map_struct risk_map)
+int solve(risk_map_struct risk_map, bool part2)
 {
+    if (part2) risk_map = expand_grid(risk_map);
+    vector<coord> nbs = get_neighbours();
+
     point source;
+    map<coord,coord> prevs;
 
     coord start = make_pair(0,0);
     coord target = make_pair(risk_map.x_size-1 ,risk_map.y_size-1);
-
     grid risk(risk_map.risk_level);
-    map<coord,coord> prevs;
+
 
     auto cmp = [](const point &a, const point &b) {
         return a.second > b.second;
     };  
     priority_queue< point, vector<point>, decltype(cmp)> queue(cmp);
-    
-    vector<coord> nbs = get_neighbours();
-    
+        
     for (auto const& [key, val] : risk_map.risk_level)
     {
         risk.at(key) = INT_MAX;  
     }
-    risk.at(make_pair(0,0)) = 0;
+    risk.at(start) = 0;
+
 
     source = make_pair(start,0);
     queue.push(source);
-
     while(queue.size()>0)
     {
-        cout << queue.size() << endl;;
+        //cout << queue.size() << endl;;
         source = queue.top();
         queue.pop();
         
-
         for (auto &nb:nbs)
         {
             coord u = make_pair(source.first.first+nb.first, source.first.second+nb.second);
@@ -137,33 +135,31 @@ int solve(risk_map_struct risk_map)
         }
     }
 
-    //backtrack route
-    stack<coord> route;
-    coord loc = target;
-    route.push(loc);
-    while (loc != start)
-    {
-        loc = prevs.at(loc);
-        route.push(loc);
-    }
-
-
-    return risk.at(target);
+    return risk.at(target);   
 
 }
 
 int main()
 {
+
     int day = 15;
 
     auto start = chrono::high_resolution_clock::now();
     
-    string filename = "../../input/day_" + to_string(day) + "_test.txt";
+    string filename = "../../input/day_" + to_string(day) + ".txt";
     vector<string> string_data = read_file<string>(filename,false);
     risk_map_struct risk_map = parse(string_data);
-    //risk_map = expand_grid(risk_map);
 
-    int part_1 = solve(risk_map);
-    cout << part_1 << endl;
+    auto parsed = chrono::high_resolution_clock::now();
+
+    int part_1 = solve(risk_map, false);
+    int part_2 = solve(risk_map, true);
+
+    auto solved = chrono::high_resolution_clock::now();
+    
+    vector<chrono::high_resolution_clock::time_point> time_stamps{start , parsed, solved};
+    print_results<int>(day, part_1, part_2, time_stamps);
+
+    return 0;
 
 }

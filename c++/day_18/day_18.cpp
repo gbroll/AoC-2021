@@ -1,4 +1,3 @@
-
 #include "../utils/file_reader.cpp"
 #include "../utils/result_printer.cpp"
 

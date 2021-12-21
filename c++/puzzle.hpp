@@ -1,3 +1,5 @@
+#include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -12,9 +14,12 @@ public:
 
     //abstract methods to be implemented by inheriting class
     virtual void parse_input() = 0;
-    virtual void solve() = 0;
-    
+    virtual void solve_part1() = 0;
+    virtual void solve_part2() = 0;
+
+    void solve();
     void read_file();
+    void print_solutions();
 
     bool skip_empty_lines;
     bool test_input;
@@ -24,6 +29,7 @@ public:
     T part2_solution;
 };
 
+
 template <class T>
 Puzzle_base<T>::Puzzle_base(int _day, bool _skip_empty_lines, bool _test_input)
 {
@@ -31,6 +37,19 @@ Puzzle_base<T>::Puzzle_base(int _day, bool _skip_empty_lines, bool _test_input)
     skip_empty_lines = _skip_empty_lines;
     test_input = _test_input;
 };
+
+template <class T>
+void Puzzle_base<T>::solve()
+{
+    read_file();
+    parse_input();
+
+    solve_part1();
+    solve_part2();
+
+    print_solutions();
+}
+
 
 template <class T>
 void Puzzle_base<T>::read_file()
@@ -71,4 +90,12 @@ void Puzzle_base<T>::read_file()
     }
     file_in.close();
     str_data = output;
+}
+
+template <class T>
+void Puzzle_base<T>::print_solutions()
+{
+    cout << "Day " << to_string(day) << " part 1 solution: " << part1_solution << endl;
+    cout << "Day " << to_string(day) << " part 2 solution: " << part2_solution << endl;
+    cout << endl;
 }
